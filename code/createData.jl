@@ -10,6 +10,9 @@ using Pipe
 using DataStructures
 using StatsBase
 using ProgressMeter
+using Random
+Random.seed!(2002261988307380348)
+
 ##
 using Conda
 Conda.pip_interop(true)
@@ -478,7 +481,7 @@ END;
 \t\tprset clockvarpr = igr;
 \t\tset beagleprecision=double;
 \t\tmcmcp burnin = 100000 stoprule=no stopval=0.01 filename=output/$fm samplefreq=1000;
-\t\tmcmc ngen=10000000 nchains=4;
+\t\tmcmc ngen=10000000 nchains=4 Seed=12345 Swapseed=23456;
 \t\tsump;
 \t\tsumt;
 \tend;

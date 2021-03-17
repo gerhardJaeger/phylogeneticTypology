@@ -15,6 +15,8 @@ using RCall
 using Formatting
 using ProgressMeter
 using Statistics
+using Random
+Random.seed!(818480685100856001)
 
 ##
 

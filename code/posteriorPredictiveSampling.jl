@@ -13,6 +13,8 @@ using ProgressMeter
 using LinearAlgebra
 using StatsFuns
 using MCPhylo
+using Random
+Random.seed!(6046749401947475242)
 
 ##
 

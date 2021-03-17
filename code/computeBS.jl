@@ -20,6 +20,8 @@ using Base.Threads
 using StatsFuns
 using Optim
 using Distributions
+using Random
+Random.seed!(6897415724436294598)
 
 ##
 

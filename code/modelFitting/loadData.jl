@@ -10,10 +10,13 @@ using CSV
 using DataFrames
 using Pipe
 using ProgressMeter
+using Random
+
 
 ##
 
 using MCPhylo
+Random.seed!(4928370335238343681)
 
 ##
 

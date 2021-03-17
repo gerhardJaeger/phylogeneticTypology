@@ -20,6 +20,8 @@ using Base.Threads
 using RCall
 using StatsFuns
 using MCPhylo
+using Random
+Random.seed!(9011452010850473240)
 
 ##
 

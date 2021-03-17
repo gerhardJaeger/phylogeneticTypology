@@ -1,0 +1,58 @@
+seed(93798823)
+
+data <- readDiscreteCharacterData("../../data/asjpNex/"+family+".nex")
+
+taxa = data.taxa()
+
+mvi = 0
+mni = 0
+
+
+
+rootAge ~ dnGamma(1, 1)
+
+moves[++mvi] = mvScale(rootAge)
+
+tree ~ dnBirthDeath(lambda=1, rootAge=rootAge, taxa=taxa)
+
+
+
+pi ~ dnDirichlet(v(1,1))
+moves[++mvi] = mvBetaSimplex(pi, weight=2)
+moves[++mvi] = mvDirichletSimplex(pi, weight=1)
+Q:= fnGTR(simplex(v(1)),pi)
+alpha ~ dnExponential(1)
+moves[++mvi] = mvScale(alpha, weight=2.0)
+gamma_rates := fnDiscretizeGamma(alpha, alpha, 4)
+seq ~ dnPhyloCTMC(tree=tree, Q=Q,
+                     rootFrequencies=pi,
+                     siteRates=gamma_rates,
+                     coding="all",
+                     type="Standard")
+
+
+
+seq.clamp(data)
+
+mymodel = model(seq)
+
+monitors[++mni] = mnFile(filename="output/"+family+".p",
+                          printgen = 1000, separator = TAB)
+monitors[mni].addVariable(pi)
+monitors[mni].addVariable(rootAge)
+monitors[mni].addVariable(alpha)
+
+
+
+monitors[++mni] = mnFile(filename="output/"+family+".t",
+                         printgen=1000, separator = TAB, tree)
+
+monitors[++mni] = mnScreen(printgen=1000)
+
+mymcmc = mcmc(mymodel, monitors, moves, nruns=2)
+
+mymcmc.burnin(generations=1000,tuningInterval=100)
+
+mymcmc.run(generations=1000000)
+
+q()
