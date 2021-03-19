@@ -1,7 +1,6 @@
 ## Code accompanying the paper *Phylogenetic typology* by Gerhard Jäger and Johannes Wahle
 
 
-
 We used the following software:
 
 - julia v.1.5.3
@@ -9,49 +8,13 @@ We used the following software:
 - MrBayes v. 3.2.7a with Beagle support
 - RevBayes v.1.1.0
 
-To replicate the results, change to the root directory of this repo and execute the following commands in that order:
+To replicate the results, change to the root directory of this repo and execute the following scripts:
 
-- `cd code`
+- CreateTreeSamples.sh
+- ModelFitting.sh
 
-- `julia createData.jl`
+The first script will compute the posterior distributions of phylogenetic trees. The second script fits the
+lineage specific and the universal model. It also compute the statistics for the model fit and produces
+graphical and textual output.
 
-- `cd ../data/asjpNex/`
-
-- `for f in *mb.nex; do mb $f; done`
-
-- `cd ../../code/revbayes`
-
-- `for f in *Rev; do rb $f; done`
-
-- `Rscript createPosterior.r`
-
-- `julia priorPredictiveSampling.jl`
-
-- `cd modelFitting`
-
-- `for i in {1..28}; do julia universal.jl $i; done`
-
-- `for i in {1..28}; do julia lineage.jl $i; done`
-
-- `cd ..`
-
-- `for i in {1..28}; do julia posteriorPredictiveSampling.jl $i; done`
-
-- `for i in {1..28}; do julia computeBS.jl $i; done`
-
-- `for i in {1..28}; do julia computeLOO.jl $i; done`
-
-- `julia correlations.jl`
-
-- `julia visualizeBS.jl`
-
-- `julia visualizeCTMC.jl`
-
-- `julia visualizeLOO.jl`
-
-- `julia visualizePPP.jl`
-
-- `julia savePosteriorStatistics.jl`
-
-  
-
+For a plain list of the commands see here: [Plain Commands](./PlainCommands.md)
