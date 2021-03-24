@@ -469,7 +469,7 @@ END;
         nex = """
 #Nexus
 \tBegin MrBayes;
-\t\tset seed=109958;
+\t\tset seed=6789580436154794230;
 \t\tset swapseed = 614090213;
 \t\texecute ../../data/asjpNex/$fm.nex;
 \t\tlset rates=gamma coding=all;
