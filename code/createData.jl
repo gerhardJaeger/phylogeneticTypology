@@ -363,6 +363,12 @@ try
 catch e
 end
 
+try
+    mkdir("mrbayes/")
+catch e
+end
+
+
 glot3 = filter(x->x.nrow>2, famFreqs).glot_fam
 
 ##
@@ -452,47 +458,51 @@ END;
     fmGlot = glot.copy()
     fmGlot.prune(fmTaxa)
     constraints = []
-    for nd in fmGlot.get_descendants()
-        if !nd.is_leaf()
-            push!(constraints, nd.get_leaf_names())
+    if length(fmTaxa) > 5
+        for nd in fmGlot.get_descendants()
+            if !nd.is_leaf()
+                push!(constraints, nd.get_leaf_names())
+            end
         end
     end
-
-    nex = """
+    function mbScript(stoprule, ngen, append)
+        nex = """
 #Nexus
 \tBegin MrBayes;
-\t\texecute $fm.nex;
-\t\tconstraint root=1-.;
+\t\tset seed=109958;
+\t\tset swapseed = 614090213;
+\t\texecute ../../data/asjpNex/$fm.nex;
 \t\tlset rates=gamma coding=all;
 """
 
-    if length(constraints) > 0
-        for (i, cn) in enumerate(constraints)
-            nex *= "\t\tconstraint c$i = " * join(cn, " ") * ";\n"
+        if length(constraints) > 0
+            for (i, cn) in enumerate(constraints)
+                nex *= "\t\tconstraint c$i = " * join(cn, " ") * ";\n"
+            end
+
+            nex *= "\t\tprset topologypr = constraints("
+            nex *= join(["c$i" for i in 1:length(constraints)], ",") * ");\n"
         end
 
-        nex *= "\t\tprset topologypr = constraints("
-        nex *= join(["c$i" for i in 1:length(constraints)], ",") * ");\n"
-    end
-
-    nex *= """
-
+        nex *= """
 \t\tprset brlenspr = clock:uniform;
 \t\tprset clockvarpr = igr;
 \t\tset beagleprecision=double;
-\t\tset seed=12345;
-\t\tset swapseed = 23456;
-\t\tmcmcp burnin = 100000 stoprule=no stopval=0.01 filename=output/$fm samplefreq=1000;
-\t\tmcmc ngen=10000000 nchains=4;
+\t\tmcmcp Burninfrac=0.5 stoprule=$stoprule stopval=0.01 filename=../../data/asjpNex/output/$fm samplefreq=1000  printfreq=5000 append=$append;
+\t\tmcmc ngen=$ngen nchains=4;
 \t\tsump;
 \t\tsumt;
 \tend;
 """
-    open("../data/asjpNex/$(fm).mb.nex", "w") do file
-        write(file, nex)
+    end
+
+    open("mrbayes/$(fm).mb.nex", "w") do file
+        write(file, mbScript("no", 1000000, "no"))
+    end
+    open("mrbayes/$(fm).mb1.nex", "w") do file
+        write(file, mbScript("yes", 10000000, "yes"))
     end
 end
-
 ##
 
 try
