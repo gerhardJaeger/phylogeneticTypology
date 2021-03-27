@@ -363,13 +363,13 @@ try
 catch e
 end
 
-try
-    mkdir("mrbayes/")
-catch e
-end
-
 
 glot3 = filter(x->x.nrow>2, famFreqs).glot_fam
+
+open("../data/glot3.txt", "w") do file
+    write(file, join(glot3, "\n")*"\n")
+end
+
 
 ##
 
@@ -450,57 +450,8 @@ MATRIX
 
 END;
 """
-
     open("../data/asjpNex/"*fm*".nex", "w") do file
         write(file, nex)
-    end
-
-    fmGlot = glot.copy()
-    fmGlot.prune(fmTaxa)
-    constraints = []
-    if length(fmTaxa) > 5
-        for nd in fmGlot.get_descendants()
-            if !nd.is_leaf()
-                push!(constraints, nd.get_leaf_names())
-            end
-        end
-    end
-    function mbScript(stoprule, ngen, append)
-        nex = """
-#Nexus
-\tBegin MrBayes;
-\t\tset seed=6789580436154794230;
-\t\tset swapseed = 614090213;
-\t\texecute ../../data/asjpNex/$fm.nex;
-\t\tlset rates=gamma coding=all;
-"""
-
-        if length(constraints) > 0
-            for (i, cn) in enumerate(constraints)
-                nex *= "\t\tconstraint c$i = " * join(cn, " ") * ";\n"
-            end
-
-            nex *= "\t\tprset topologypr = constraints("
-            nex *= join(["c$i" for i in 1:length(constraints)], ",") * ");\n"
-        end
-
-        nex *= """
-\t\tprset brlenspr = clock:uniform;
-\t\tprset clockvarpr = igr;
-\t\tset beagleprecision=double;
-\t\tmcmcp Burninfrac=0.5 stoprule=$stoprule stopval=0.01 filename=../../data/asjpNex/output/$fm samplefreq=1000  printfreq=5000 append=$append;
-\t\tmcmc ngen=$ngen nchains=4;
-\t\tsump;
-\t\tsumt;
-\tend;
-"""
-    end
-
-    open("mrbayes/$(fm).mb.nex", "w") do file
-        write(file, mbScript("no", 1000000, "no"))
-    end
-    open("mrbayes/$(fm).mb1.nex", "w") do file
-        write(file, mbScript("yes", 10000000, "yes"))
     end
 end
 ##
