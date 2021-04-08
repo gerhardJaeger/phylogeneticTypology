@@ -4,15 +4,10 @@ cd code
 julia createData.jl
 # run MrBayes for eligible files
 # CAUTION: TIME INTENSIVE
-cd mrbayes
-for f in *mb.nex; do
-    bn=`basename $f .mb.nex`;
-    mb $f;
-    mb $bn".mb1.nex";
-done
+julia runMrBayes.jl
 # run RevBayes for for eligible files
 # CAUTION: TIME INTENSIVE
-cd ../revbayes
+cd revbayes
 for f in *Rev; do
     rb $f;
 done

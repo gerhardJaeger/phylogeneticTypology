@@ -7,7 +7,6 @@ julia priorPredictiveSampling.jl
 cd modelFitting
 
 # Fit Universal Model
-# CAUTION: TIME INTENSIVE
 for i in {1..28}; do
     julia universal.jl $i;
 done

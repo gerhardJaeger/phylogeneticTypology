@@ -6,11 +6,9 @@ This file lists all commands in order. These are the same commands as in the Cre
 
 - `julia createData.jl`
 
-- `cd ../data/asjpNex/`
+- `julia runMrBayes.jl`
 
-- `for f in *mb.nex; do mb $f; done`
-
-- `cd ../../code/revbayes`
+- `cd revbayes`
 
 - `for f in *Rev; do rb $f; done`
 
