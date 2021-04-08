@@ -57,7 +57,7 @@ for charNum = 1:28
       )
       rates = exp.(vcat([sim[:, :s_rates, :].value[:, :, k] for k in sim.chains]...))
       if charNum ∈ nrc
-            samples = samples[:, [4, 6, 5, 1, 3, 2, 11, 10, 12, 8, 7, 9]]
+            rates = rates[:, [4, 6, 5, 1, 3, 2, 11, 10, 12, 8, 7, 9]]
       end
 
       eqs = mapslices(getEqulibrium, rates, dims=2)

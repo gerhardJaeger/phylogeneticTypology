@@ -78,7 +78,7 @@ xticks!(tvPlots[end], ([1,2], ["universal", "lineage-specific"]))
 p1 = plot(tvPlots...,
     layout=grid(7,4, heights=repeat([1/7],n)))
 
-savefig("../data/img/pppTV.pdf")
+savefig("../img/pppTV.pdf")
 ##
 
 lvPlots = []
@@ -118,7 +118,7 @@ p1 = plot(lvPlots...,
     layout=grid(7,4, heights=repeat([1/7],n)))
 
 
-savefig("../data/img/pppLV.pdf")
+savefig("../img/pppLV.pdf")
 ##
 
 
@@ -160,7 +160,7 @@ xticks!(clvPlots[end], ([1,2], ["universal", "lineage-specific"]))
 p1 = plot(clvPlots...,
     layout=grid(7,4, heights=repeat([1/7],n)))
 
-savefig("../data/img/pppCLV.pdf")
+savefig("../img/pppCLV.pdf")
 ##
 
 function getStatistics(charNum, stats)

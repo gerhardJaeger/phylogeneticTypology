@@ -49,7 +49,7 @@ scatter(bs.bf, 1:28,
     markersize=upscale*3,
     )
 
-savefig("../data/img/bayesfactor.pdf")
+savefig("../img/bayesfactor.pdf")
 
 
 

@@ -51,7 +51,7 @@ scatter(loo.delta, 1:28,
     markersize=upscale*3,
     )
 
-savefig("../data/img/loo.pdf")
+savefig("../img/loo.pdf")
 
 ##
 

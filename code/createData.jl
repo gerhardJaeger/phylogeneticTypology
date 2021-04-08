@@ -74,17 +74,6 @@ params = CSV.read(paramsF, DataFrame)
 codes = CSV.read(codesF, DataFrame)
 ##
 
-# woFeatures = ['87A Order of Adjective and Noun',
-#               '85A Order of Adposition and Noun Phrase',
-#               '88A Order of Demonstrative and Noun',
-#               '86A Order of Genitive and Noun',
-#               '89A Order of Numeral and Noun',
-#               '83A Order of Object and Verb',
-#               '90A Order of Relative Clause and Noun',
-#               '82A Order of Subject and Verb']
-#
-
-
 woFeatures = ["87A", "86A", "85A", "88A", "89A", "83A", "90A", "82A"]
 
 

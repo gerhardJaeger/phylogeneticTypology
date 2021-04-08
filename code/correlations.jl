@@ -1,3 +1,4 @@
+cd(@__DIR__)
 
 using Pkg
 Pkg.activate(".")
@@ -24,7 +25,6 @@ fpairs = CSV.read("../data/fpairs.txt", DataFrame, header=false)[:,1]
 
 ##
 function getEqulibirium(rates)
-      q = zeros(4, 4)
       q = zeros(4, 4)
       indices = [
             (2, 1),
@@ -192,12 +192,12 @@ end
 plot(linreg_...,layout=grid(7,4, heights=repeat([1/7],28)))
 
 try
-      mkdir("../data/img/")
+      mkdir("../img/")
 catch e
 end
 
 
-savefig("../data/img/linearRegression.pdf")
+savefig("../img/linearRegression.pdf")
 ##
 
 sort!(cors, :median)
@@ -232,7 +232,7 @@ xlabel!("correlation (posterior distribution)")
 
 display(p)
 
-savefig("../data/img/correlations.pdf")
+savefig("../img/correlations.pdf")
 
 ##
 
@@ -318,4 +318,4 @@ scatter(bf.bf, 1:28,
     markersize=upscale*3,
     )
 
-savefig("../data/img/bayesfactorCorr.pdf")
+savefig("../img/bayesfactorCorr.pdf")

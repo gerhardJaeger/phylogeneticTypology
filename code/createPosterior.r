@@ -3,7 +3,7 @@ library(geiger)
 
 bi <- 0.5
 
-files <- list.files("../data/asjpNex")
+files <- list.files("mrbayes/")
 
 mbfiles <- files[grepl(".mb.nex$", files)]
 

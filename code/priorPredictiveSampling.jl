@@ -1,3 +1,4 @@
+cd(@__DIR__)
 using Pkg
 Pkg.activate(".")
 Pkg.instantiate()
@@ -321,9 +322,14 @@ p3 = @df u_clv_df boxplot(
 
 ##
 
-savefig(p1, "../../img/priorSimulationUniversal_1.png")
-savefig(p2, "../../img/priorSimulationUniversal_2.png")
-savefig(p3, "../../img/priorSimulationUniversal_3.png")
+try
+    mkdir("../img")
+catch e
+end
+
+savefig(p1, "../img/priorSimulationUniversal_1.png")
+savefig(p2, "../img/priorSimulationUniversal_2.png")
+savefig(p3, "../img/priorSimulationUniversal_3.png")
 
 ##
 
@@ -381,6 +387,6 @@ p6 = @df l_clv_df boxplot(
 
 ##
 
-savefig(p4, "../../img/priorSimulationLineage_1.png")
-savefig(p5, "../../img/priorSimulationLineage_2.png")
-savefig(p6, "../../img/priorSimulationLineage_3.png")
+savefig(p4, "../img/priorSimulationLineage_1.png")
+savefig(p5, "../img/priorSimulationLineage_2.png")
+savefig(p6, "../img/priorSimulationLineage_3.png")

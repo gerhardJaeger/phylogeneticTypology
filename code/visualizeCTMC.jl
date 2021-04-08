@@ -199,4 +199,4 @@ end
 ##
 plot(ctmc_...,layout=grid(7,4, heights=repeat([1/7],28)))
 
-savefig("../data/img/ctmc.pdf")
+savefig("../img/ctmc.pdf")

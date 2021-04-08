@@ -82,11 +82,13 @@ end
     nex *= """
 \t\tprset brlenspr = clock:uniform;
 \t\tprset clockvarpr = igr;
+\t\tprset treeagepr=Gamma(0.05, 0.005);
+\t\tprset shapepr=Exponential(10);
 \t\tset beagleprecision=double;
 \t\tmcmcp Burninfrac=0.5 stoprule=no stopval=0.01;
 \t\tmcmcp filename=../data/asjpNex/output/$fm;
 \t\tmcmcp samplefreq=1000 printfreq=5000 append=$append;
-\t\tmcmc ngen=$ngen nchains=4;
+\t\tmcmc ngen=$ngen nchains=4 nruns=2;
 \t\tsump;
 \t\tsumt;
 \tend;
@@ -115,7 +117,6 @@ for fm in families
         )
 
         maxPSRF = maximum(pstat.PSRF)
-        minESS = minimum(pstat.minESS)
 
         tstat = CSV.read(
             "../data/asjpNex/output/$fm.tstat",
@@ -135,13 +136,14 @@ for fm in families
             datarow = 3,
             delim = "\t",
             ignorerepeated = true,
-        )
+            missingstring="NA",
+        ) |> dropmissing
 
         maxPSRF = maximum([maxPSRF, maximum(vstat.PSRF)])
-        maxPSRF <= 1.1 && minESS >= 100 && meanStdev <= 0.01
+        maxPSRF <= 1.1 && meanStdev <= 0.01
     end
     while !converged()
-        nrun += 100000
+        nrun += 1000000
         open(mbFile, "w") do file
             write(file, mbScript(fm, nrun, "yes"))
         end
