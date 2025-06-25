@@ -149,7 +149,6 @@ uD = bridge_sampling(Array(samples), log_density)
 
 ##
 
-sz =
 
 sim = read(
       "modelFitting/output/lineage_$(charS).jls",
